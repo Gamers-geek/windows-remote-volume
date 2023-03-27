@@ -6,86 +6,47 @@
     <script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <style>
-        body {
-            margin: 0;
-            padding-bottom: 3rem;
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-        }
-
-        #form {
-            background: rgba(0, 0, 0, 0.15);
-            padding: 0.25rem;
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            display: flex;
-            height: 3rem;
-            box-sizing: border-box;
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-        }
-
-        #input {
-            border: none;
-            padding: 0 1rem;
-            flex-grow: 1;
-            border-radius: 2rem;
-            margin: 0.25rem;
-        }
-
-        #input:focus {
-            outline: none;
-        }
-
-        #form>button {
-            background: #333;
-            border: none;
-            padding: 0 1rem;
-            margin: 0.25rem;
-            border-radius: 3px;
-            outline: none;
-            color: #fff;
-        }
-
-        #messages {
-            list-style-type: none;
-            margin: 0;
-            padding: 0;
-        }
-
-        #messages>li {
-            padding: 0.5rem 1rem;
-        }
-
-        #messages>li:nth-child(odd) {
-            background: #efefef;
-        }
-    </style>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css"
+        integrity="sha512-SzlrxWUlpfuzQ+pcUCosxcglQRNAq/DZjVsC0lE40xsADsfeQoEypE+enwcOiGjk/bSuGGKHEyjSoQ1zVisanQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/bulma-extensions@4.0.1/bulma-slider/dist/css/bulma-slider.min.css"
+        crossorigin="anonymous" referrerpolicy="no-referrer">
 </head>
 
 <body>
-    <button type="button" id="volumeUpButton">Plus</button>
-    <button type="button" id="volumeDownButton">Moins</button>
-    <script>
-        var socket = io();
 
-        const upButton = document.getElementById("volumeUpButton")
-        const downButton = document.getElementById("volumeDownButton")
+    <section class="section">
+        <div class="container">
+            <span id="soundValue" class="title">0%</span><br>
+            <button class="button is-large" id="volumeUpButton">
+                <span class="icon is-large">
+                    <i class="fas fa-plus"></i>
+                </span>
+            </button>
+            <button class="button is-large" id="volumeToggleMute">
+                <span class="icon is-large">
+                    <i class="fas fa-volume-xmark"></i>
+                </span>
+            </button>
+            <button class="button is-large" id="volumeDownButton">
+                <span class="icon is-large">
+                    <i class="fas fa-minus"></i>
+                </span>
+            </button>
+            <form>
+                <input id="volumeBar" class="slider has-output is-fullwidth" min="0" max="100" value="0" step="1"
+                    type="range">
+                <output for="volumeBar" id="volumeBarPercent">0%</output>
+            </form>
+        </div>
+    </section>
 
-        upButton.addEventListener("click", function () {
-            socket.emit("changeVolume", { type: "up" })
-        })
-        downButton.addEventListener("click", function () {
-            socket.emit("changeVolume", { type: "down" })
-        })
 
-        socket.on("audioVolume", function (data) {
-            console.log(data)
-        })
-
-    </script>
+    <script src="./src/js/index.js" type="text/javascript"></script>
+    <script type="text/javascript"
+        src="https://cdn.jsdelivr.net/npm/bulma-slider@2.0.4/dist/js/bulma-slider.min.js"></script>
 </body>
 
 </html>
