@@ -5,6 +5,8 @@ const server = http.createServer(app);
 const { Server } = require("socket.io");
 const io = new Server(server);
 const audio = require("win-audio");
+const { lookup } = require("dns");
+const { hostname } = require("os");
 
 app.use(express.static("public"));
 
@@ -13,7 +15,9 @@ app.get("/", (req, res) => {
 });
 
 server.listen(3000, () => {
-	console.log("listening on *:3000");
+	lookup(hostname(), function (err, add, fam) {
+		console.log(`listening on http://${add}:3000`);
+	});
 });
 
 io.on("connection", (socket) => {

@@ -22,12 +22,10 @@ toggleMuteButton.addEventListener("click", function () {
 });
 
 volumeBar.addEventListener("change", function (newVal) {
-	console.log(newVal.target.value);
 	socket.emit("changeVolume", { type: "bar", value: newVal.target.value });
 });
 
 socket.on("audioVolume", function (data) {
-	console.log(data);
 	muted = data.muted || false;
 	volume = data.value || 0;
 	updatePageValue();
@@ -46,5 +44,11 @@ function updatePageValue() {
 	volumeBar.setAttribute("value", volume);
 	soundValue.innerText = `${volume}%`;
 	volumebarPercent.value = `${volume}%`;
+
+	if (muted) {
+		volumeBar.setAttribute("disabled", true);
+	} else {
+		volumeBar.removeAttribute("disabled");
+	}
 }
 bulmaSlider.attach();
