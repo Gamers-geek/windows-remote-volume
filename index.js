@@ -58,4 +58,15 @@ io.on("connection", (socket) => {
 				break;
 		}
 	});
+	audio.speaker.events.on("change", (volume) => {
+		io.emit("audioVolume", {
+			value: volume.new,
+			muted: audio.speaker.isMuted(),
+		});
+	});
+
+	audio.speaker.events.on("toggle", (status) => {
+		soundValue = audio.speaker.get();
+		io.emit("audioVolume", { type: soundValue, muted: status.new });
+	});
 });
